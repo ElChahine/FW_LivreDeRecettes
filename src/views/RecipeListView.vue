@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { recipes } from '../data/recipes.js';
+import RecipeCard from '../components/RecipeCard.vue'; // 1. On importe le composant enfant
 
 const searchQuery = ref('');
 
@@ -23,10 +24,27 @@ const filteredRecipes = computed(() => {
     >
 
     <div class="recipe-grid">
-      <div v-for="recipe in filteredRecipes" :key="recipe.id" class="card">
-        <h3>{{ recipe.title }}</h3>
-        <router-link :to="`/recettes/${recipe.id}`">Voir la recette</router-link>
-      </div>
+      <RecipeCard 
+        v-for="recipe in filteredRecipes" 
+        :key="recipe.id" 
+        :recipe="recipe" 
+      />
     </div>
   </div>
 </template>
+
+<style scoped>
+.search-bar {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+</style>
