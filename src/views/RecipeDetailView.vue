@@ -1,28 +1,55 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { recipes } from '../data/recipes.js';
 
 const route = useRoute();
-// On cherche dans notre tableau la recette qui correspond à l'ID de l'URL
-const recipe = recipes.find(r => r.id === parseInt(route.params.id));
+const recipe = ref(null);
+const loading = ref(true);
+
+const fetchRecipeDetail = async () => {
+  try {
+    // On utilise l'ID de l'URL pour demander les détails à l'API
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${route.params.id}`);
+    const data = await response.json();
+    
+    if (data.meals) {
+      const meal = data.meals[0];
+      // On prépare l'objet recette avec les données de l'API
+      recipe.value = {
+        title: meal.strMeal,
+        instructions: meal.strInstructions,
+        image: meal.strMealThumb,
+        category: meal.strCategory,
+        area: meal.strArea
+      };
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération du détail :", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(fetchRecipeDetail);
 </script>
 
 <template>
-  <div v-if="recipe">
+  <div v-if="loading">Chargement des détails...</div>
+  
+  <div v-else-if="recipe">
     <h1>{{ recipe.title }}</h1>
-    <p><em>{{ recipe.description }}</em></p>
+    <img :src="recipe.image" :alt="recipe.title" style="width: 300px; border-radius: 10px;" />
     
-    <h3>Ingrédients :</h3>
-    <ul>
-      <li v-for="ing in recipe.ingredients" :key="ing">{{ ing }}</li>
-    </ul>
-
-    <h3>Instructions :</h3>
-    <p>{{ recipe.instructions }}</p>
+    <p><strong>Catégorie :</strong> {{ recipe.category }} ({{ recipe.area }})</p>
+    
+    <h3>Instructions de préparation :</h3>
+    <p style="white-space: pre-line;">{{ recipe.instructions }}</p>
 
     <router-link to="/recettes">← Retour à la liste</router-link>
   </div>
+  
   <div v-else>
-    <p>Recette introuvable.</p>
+    <p>Recette introuvable ou erreur de chargement.</p>
+    <router-link to="/recettes">Retour à la liste</router-link>
   </div>
 </template>

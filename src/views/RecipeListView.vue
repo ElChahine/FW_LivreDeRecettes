@@ -1,29 +1,49 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { recipes } from '../data/recipes.js';
-import RecipeCard from '../components/RecipeCard.vue'; // 1. On importe le composant enfant
+import { ref, onMounted, computed } from 'vue';
+import RecipeCard from '../components/RecipeCard.vue';
 
+const recipes = ref([]); // Liste vide au départ
+const loading = ref(true); // État de chargement
 const searchQuery = ref('');
 
-// Propriété calculée pour filtrer la liste en temps réel
+// Fonction pour récupérer les données de l'API
+const fetchRecipes = async () => {
+  try {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const data = await response.json();
+    // On adapte les données de l'API à notre format (id, title, description, image)
+    recipes.value = data.meals.map(meal => ({
+      id: meal.idMeal,
+      title: meal.strMeal,
+      description: meal.strCategory + ' - ' + meal.strArea,
+      image: meal.strMealThumb
+    }));
+  } catch (error) {
+    console.error("Erreur lors de la récupération :", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+// On appelle l'API au montage du composant
+onMounted(fetchRecipes);
+
 const filteredRecipes = computed(() => {
-  return recipes.filter(recipe => 
+  return recipes.value.filter(recipe =>
     recipe.title.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
 </script>
 
 <template>
-  <div class="container">
+  <div class="recipe-list">
     <h1>Nos Recettes</h1>
     
-    <input 
-      v-model="searchQuery" 
-      placeholder="Rechercher une recette..."
-      class="search-bar"
-    >
+    <input v-model="searchQuery" placeholder="Rechercher une recette..." class="search-input" />
 
-    <div class="recipe-grid">
+    <div v-if="loading">Chargement des recettes...</div>
+    
+    <div v-else class="recipes-container">
       <RecipeCard 
         v-for="recipe in filteredRecipes" 
         :key="recipe.id" 
