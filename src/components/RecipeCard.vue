@@ -1,8 +1,11 @@
 <script setup>
-import { useFavoriteStore } from '../stores/favorites'; // Import du store
+import { useFavoriteStore } from '../stores/favorites'; 
 
+// Récupération des données transmises par le composant parent (RecipeListView)
 const props = defineProps(['recipe']);
-const favoriteStore = useFavoriteStore(); // Utilisation du store
+
+// Initialisation du store pour pouvoir utiliser l'action toggleFavorite
+const favoriteStore = useFavoriteStore(); 
 </script>
 
 <template>

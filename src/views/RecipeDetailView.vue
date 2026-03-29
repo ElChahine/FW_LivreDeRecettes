@@ -3,14 +3,15 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 
+// useRoute permet d'accéder aux paramètres de l'URL actuelle
 const route = useRoute();
 const recipe = ref(null);
 const loading = ref(true);
 const ingredients = ref([]);
 
-// On récupère la recette ciblée grâce à l'ID de l'URL
 const fetchRecipeDetail = async () => {
   try {
+    // Extraction de l'ID passé dynamiquement dans la route
     const recipeId = route.params.id; 
     
     const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`);
@@ -24,12 +25,13 @@ const fetchRecipeDetail = async () => {
         image: meal.strMealThumb
       };
 
-      // L'API donne les ingrédients dans plein de variables (strIngredient1, 2, 3...), on boucle pour tout ranger dans un tableau propre
+      // L'API retourne les ingrédients dans des champs séparés (strIngredient1 à 20)
+      // On boucle sur ces champs pour générer un tableau propre
       const extractedIngredients = [];
       for (let i = 1; i <= 20; i++) {
         const ingredient = meal[`strIngredient${i}`];
         const measure = meal[`strMeasure${i}`];
-        // On vérifie que l'ingrédient n'est pas vide avant de l'ajouter
+        
         if (ingredient && ingredient.trim() !== '') {
           extractedIngredients.push(`${measure} ${ingredient}`.trim());
         }
@@ -81,16 +83,19 @@ onMounted(fetchRecipeDetail);
   max-width: 800px;
   margin: 0 auto;
 }
+
 .recipe-image {
   width: 100%;
   max-width: 400px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
+
 .instructions {
-  white-space: pre-line; /* Permet de garder les vrais sauts de ligne du texte de l'API */
+  white-space: pre-line;
   line-height: 1.6;
 }
+
 .back-link {
   display: inline-block;
   margin-bottom: 20px;
