@@ -1,13 +1,19 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 
+/**
+ * LOGIQUE DU COMPOSANT
+ */
 const route = useRoute();
 const recipe = ref(null);
 const loading = ref(true);
 const ingredients = ref([]);
 
+/**
+ * RÉCUPÉRATION DES DÉTAILS
+ */
 const fetchRecipeDetail = async () => {
   try {
     const recipeId = route.params.id; 
@@ -23,6 +29,7 @@ const fetchRecipeDetail = async () => {
         image: meal.strMealThumb
       };
 
+      // Extraction des ingrédients et mesures
       const extractedIngredients = [];
       for (let i = 1; i <= 20; i++) {
         const ingredient = meal[`strIngredient${i}`];
@@ -43,6 +50,19 @@ const fetchRecipeDetail = async () => {
     loading.value = false;
   }
 };
+
+/**
+ * AMÉLIORATION : Découpage des instructions en étapes numérotées
+ * On utilise une propriété calculée pour transformer le gros bloc de texte en tableau
+ */
+const formattedSteps = computed(() => {
+  if (!recipe.value || !recipe.value.instructions) return [];
+  
+  // On découpe par point suivi d'un espace ou par retour à la ligne
+  return recipe.value.instructions
+    .split(/\r\n|\n|\r|(?<=\.) /)
+    .filter(step => step.trim().length > 5); // On ignore les lignes vides ou trop courtes
+});
 
 onMounted(fetchRecipeDetail);
 </script>
@@ -74,6 +94,7 @@ onMounted(fetchRecipeDetail);
       </section>
 
       <div class="recipe-grid">
+        
         <aside class="ingredients-section">
           <h3>Ingrédients</h3>
           <ul class="ingredients-list">
@@ -86,7 +107,17 @@ onMounted(fetchRecipeDetail);
 
         <article class="instructions-section">
           <h3>Instructions de préparation</h3>
-          <p class="instructions-text">{{ recipe.instructions }}</p>
+          
+          <div class="steps-container">
+            <div v-for="(step, index) in formattedSteps" :key="index" class="step-card">
+              <div class="step-number">{{ index + 1 }}</div>
+              <p class="step-text">{{ step }}</p>
+            </div>
+          </div>
+          
+          <p v-if="formattedSteps.length === 0" class="instructions-text">
+            {{ recipe.instructions }}
+          </p>
         </article>
       </div>
     </div>
@@ -99,6 +130,9 @@ onMounted(fetchRecipeDetail);
 </template>
 
 <style scoped>
+/**
+ * REPRISE INTÉGRALE DE TES STYLES
+ */
 .recipe-container {
   max-width: 1100px;
   margin: 40px auto;
@@ -221,7 +255,7 @@ onMounted(fetchRecipeDetail);
   color: #42b883;
 }
 
-/* Instructions */
+/* Instructions Améliorées */
 .instructions-section {
   background: white;
   padding: 30px;
@@ -229,11 +263,32 @@ onMounted(fetchRecipeDetail);
   box-shadow: 0 5px 20px rgba(0,0,0,0.03);
 }
 
-.instructions-text {
-  white-space: pre-line;
-  line-height: 1.8;
+.step-card {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.step-number {
+  background: #42b883;
+  color: white;
+  min-width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.step-text {
+  line-height: 1.7;
   font-size: 1.05rem;
   color: #34495e;
+  margin: 0;
 }
 
 /* Loader */
