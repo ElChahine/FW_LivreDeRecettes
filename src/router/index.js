@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import RecipeListView from '../views/RecipeListView.vue';
 import RecipeDetailView from '../views/RecipeDetailView.vue';
 import LoginView from '../views/LoginView.vue';
+import ProfileView from '../views/ProfileView.vue';
 import { useAuthStore } from '../stores/auth';
 
 const routes = [
@@ -14,13 +15,19 @@ const routes = [
     path: '/recettes', 
     name: 'Recipes', 
     component: RecipeListView,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: false } 
   },
   { 
     path: '/recettes/:id', 
     name: 'RecipeDetail', 
     component: RecipeDetailView,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: false } 
+  }
+  { 
+    path: '/profil', 
+    name: 'Profile', 
+    component: ProfileView, 
+    meta: { requiresAuth: true }
   }
 ];
 
