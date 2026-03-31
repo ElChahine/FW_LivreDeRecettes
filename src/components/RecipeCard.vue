@@ -1,8 +1,27 @@
 <script setup>
+import { computed } from 'vue';
 import { useFavoriteStore } from '../stores/favorites';
+import { useAuthStore } from '../stores/auth'; // Import pour vérifier la connexion 
+import { useLibraryStore } from '../stores/libraries'; // Import pour gérer l'ajout [cite: 2]
 
 const props = defineProps(['recipe']);
+
 const favoriteStore = useFavoriteStore();
+const authStore = useAuthStore();
+const libStore = useLibraryStore();
+
+// Récupère dynamiquement les bibliothèques de l'utilisateur connecté [cite: 2, 3]
+const myLibraries = computed(() => libStore.libraries[authStore.user?.name] || []);
+
+// Gère l'ajout d'une recette dans une collection sélectionnée [cite: 2]
+const handleAdd = (event) => {
+  const libId = parseInt(event.target.value);
+  if (libId) {
+    libStore.addRecipeToLibrary(libId, props.recipe);
+    event.target.value = ""; // Réinitialise le menu
+    alert('Recette ajoutée à votre collection !');
+  }
+};
 </script>
 
 <template>
@@ -12,9 +31,18 @@ const favoriteStore = useFavoriteStore();
     <div class="recipe-content">
       <h3>{{ recipe.title }}</h3>
       <p class="category">{{ recipe.description }}</p>
+
+      <div v-if="authStore.user" class="library-section">
+        <select @change="handleAdd" class="library-select">
+          <option value="" disabled selected>📁 Ajouter à une collection...</option>
+          <option v-for="lib in myLibraries" :key="lib.id" :value="lib.id">
+            {{ lib.name }}
+          </option>
+        </select>
+      </div>
       
       <div class="card-footer">
-        <router-link :to="`/recettes/${recipe.id}`" class="view-link">
+        <router-link :to="{ name: 'RecipeDetail', params: { id: recipe.id } }" class="view-link">
           Voir la recette
         </router-link>
         
@@ -27,10 +55,11 @@ const favoriteStore = useFavoriteStore();
 </template>
 
 <style scoped>
+/* Reprise intégrale de votre style esthétique */
 .recipe-card {
   background: white;
   border-radius: 15px;
-  overflow: hidden; /* Pour que l'image suive l'arrondi de la carte */
+  overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   display: flex;
@@ -45,7 +74,7 @@ const favoriteStore = useFavoriteStore();
 .recipe-image {
   width: 100%;
   height: 200px;
-  object-fit: cover; /* Important : l'image remplit le cadre sans être déformée */
+  object-fit: cover;
 }
 
 .recipe-content {
@@ -65,6 +94,28 @@ h3 {
   font-size: 0.9rem;
   color: #7f8c8d;
   margin-bottom: 1rem;
+}
+
+/* Style discret pour le sélecteur de bibliothèque */
+.library-section {
+  margin-bottom: 1.2rem;
+}
+
+.library-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ecf0f1;
+  background-color: #f9f9f9;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.library-select:focus {
+  outline: none;
+  border-color: #42b983; /* Rappel de la couleur verte de votre style */
 }
 
 .card-footer {
