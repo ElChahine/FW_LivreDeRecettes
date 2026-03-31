@@ -1,9 +1,9 @@
-# 🍳 Livre de Recettes - Projet Vue.js
+# Livre de Recettes - Projet Vue.js
 
-## 🎯 Objectif du projet
+## Objectif du projet
 L'objectif de cette application est de permettre aux passionnés de cuisine de découvrir de nouvelles recettes via l'API **TheMealDB**, de gérer leurs favoris et d'organiser leurs propres bibliothèques de recettes personnalisées. L'application offre une expérience fluide pour rechercher, consulter et sauvegarder des inspirations culinaires.
 
-## ✨ Fonctionnalités principales
+## Fonctionnalités principales
 * **Exploration dynamique** : Recherche de recettes par nom et filtrage par catégories (Bœuf, Poulet, Desserts, etc.).
 * **Fiches détaillées** : Affichage structuré des ingrédients et des étapes de préparation numérotées.
 * **Système d'Authentification** : Accès sécurisé aux fonctionnalités personnalisées.
@@ -11,7 +11,7 @@ L'objectif de cette application est de permettre aux passionnés de cuisine de d
 * **Bibliothèques Personnalisées (Collections)** : Création, modification et suppression de dossiers pour organiser ses recettes par thème (ex: "Mes desserts préférés").
 * **Accueil Dynamique** : Suggestions de recettes aléatoires à chaque visite.
 
-## 👥 Équipe et Organisation
+## Équipe et Organisation
 
 **Répartition par domaines :**
 
@@ -42,7 +42,7 @@ L'objectif de cette application est de permettre aux passionnés de cuisine de d
 4.  **Persistance des favoris liée au profil utilisateur** : Les favoris d'un utilisateur apparaissaient pour tous les comptes après reconnexion.
     * *Solution* : Structuration du `localStorage` avec une clé composée (`user_${userId}_favorites`) et nettoyage complet des stores lors de la déconnexion.
 
-## 🚀 Installation et Lancement
+## Installation et Lancement
 
 ### Prérequis
 * Node.js installé sur votre machine.
