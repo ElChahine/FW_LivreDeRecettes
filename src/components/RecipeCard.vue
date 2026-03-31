@@ -4,7 +4,6 @@ import { useFavoriteStore } from '../stores/favorites';
 import { useAuthStore } from '../stores/auth'; 
 import { useLibraryStore } from '../stores/libraries'; 
 
-// Récupère l'objet recette passé par le composant parent (ex: RecipeListView)
 const props = defineProps(['recipe']);
 
 const favoriteStore = useFavoriteStore();
@@ -67,7 +66,6 @@ const handleAdd = (event) => {
 </template>
 
 <style scoped>
-/* Les styles ont été conservés à l'identique */
 .recipe-card {
   background: white;
   border-radius: 15px;

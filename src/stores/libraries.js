@@ -7,7 +7,7 @@ export const useLibraryStore = defineStore('libraries', {
     libraries: JSON.parse(localStorage.getItem('user_libraries')) || {}
   }),
   actions: {
-    // Fonction utilitaire pour éviter la répétition de la sauvegarde
+    //éviter la répétition de la sauvegarde
     saveToStorage() {
       localStorage.setItem('user_libraries', JSON.stringify(this.libraries));
     },

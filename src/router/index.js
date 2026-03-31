@@ -8,7 +8,7 @@ import LibraryDetailView from '../views/LibraryDetailView.vue';
 import { useAuthStore } from '../stores/auth';
 
 const routes = [
-  // --- Routes publiques accessibles à tous ---
+  // public
   { path: '/', name: 'Home', component: HomeView }, 
   { path: '/login', name: 'Login', component: LoginView }, 
   
@@ -26,12 +26,12 @@ const routes = [
     meta: { requiresAuth: false } 
   },
 
-  // --- Routes privées protégées ---
+  // privées
   { 
     path: '/profil', 
     name: 'Profile', 
     component: ProfileView, 
-    meta: { requiresAuth: true } // Cette balise sert de repère au Navigation Guard
+    meta: { requiresAuth: true } // authentification nécessaire pour accéder à la page
   },
   { 
     path: '/profil/bibliotheque/:id', 
