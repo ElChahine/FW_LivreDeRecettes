@@ -11,6 +11,7 @@
         <li class="user-greeting">
           <span>Bonjour, {{ authStore.user.name }}</span>
         </li>
+        <li><router-link to="/profil">Mon Profil</router-link></li>
         <li>
           <button @click="handleLogout" class="logout-btn">Déconnexion</button>
         </li>

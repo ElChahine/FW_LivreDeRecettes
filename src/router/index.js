@@ -22,7 +22,7 @@ const routes = [
     name: 'RecipeDetail', 
     component: RecipeDetailView,
     meta: { requiresAuth: false } 
-  }
+  },
   { 
     path: '/profil', 
     name: 'Profile', 
