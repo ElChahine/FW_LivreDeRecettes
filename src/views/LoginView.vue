@@ -10,11 +10,12 @@ const username = ref('');
 const password = ref('');
 const errorMessage = ref('');
 
+// Fonction pour vérifier les identifiants et connecter l'utilisateur
 const handleLogin = () => {
   const success = authStore.login(username.value, password.value);
   
   if (success) {
-    router.push('/'); // Redirection vers l'accueil si OK
+    router.push('/'); // Redirection vers l'accueil si la connexion réussit
   } else {
     errorMessage.value = 'Identifiants incorrects. Essayez admin / 123';
   }

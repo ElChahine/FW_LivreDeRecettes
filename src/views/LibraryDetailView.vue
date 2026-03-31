@@ -6,16 +6,15 @@ import { useAuthStore } from '../stores/auth';
 import RecipeCard from '../components/RecipeCard.vue';
 
 /**
- * LOGIQUE DE RÉCUPÉRATION DES DONNÉES
+ * Logique de récupération des données cibles
  */
 const route = useRoute();
 const libStore = useLibraryStore();
 const authStore = useAuthStore();
 
-// On récupère la bibliothèque spécifique grâce à l'ID passé dans l'URL
+// On sélectionne la bonne bibliothèque en comparant son id à celui présent dans l'URL
 const library = computed(() => {
   const userLibs = libStore.libraries[authStore.user?.name] || [];
-  // On compare l'ID du paramètre d'URL avec les IDs des bibliothèques
   return userLibs.find(l => l.id === parseInt(route.params.id));
 });
 </script>
@@ -55,7 +54,7 @@ const library = computed(() => {
 
 <style scoped>
 /**
- * MISE EN PAGE
+ * Mise en page de la vue
  */
 .library-page {
   max-width: 1200px;
@@ -91,14 +90,13 @@ const library = computed(() => {
 }
 
 /**
- * GRILLE (Identique à votre page d'accueil)
+ * Grille des plats
  */
 .recipe-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2.5rem;
 }
-
 
 .empty-state, .error-container {
   text-align: center;

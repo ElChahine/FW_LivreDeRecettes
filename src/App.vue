@@ -13,7 +13,7 @@ import NavigationBar from './components/NavigationBar.vue';
 </script>
 
 <style>
-/* Style global de base */
+/* Style global de base : Définition des variables de couleurs du projet */
 :root {
   --primary-color: #2d5a27; /* Vert cuisine */
   --secondary-color: #d97706; /* Orange gourmand */

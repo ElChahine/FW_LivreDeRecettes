@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 
 /**
- * LOGIQUE DU COMPOSANT
+ * Logique principale du composant
  */
 const route = useRoute();
 const recipe = ref(null);
@@ -12,7 +12,7 @@ const loading = ref(true);
 const ingredients = ref([]);
 
 /**
- * RÉCUPÉRATION DES DÉTAILS
+ * Récupération de la recette grâce à son identifiant
  */
 const fetchRecipeDetail = async () => {
   try {
@@ -29,7 +29,7 @@ const fetchRecipeDetail = async () => {
         image: meal.strMealThumb
       };
 
-      // Extraction des ingrédients et mesures
+      // Extraction des ingrédients et mesures de la réponse API
       const extractedIngredients = [];
       for (let i = 1; i <= 20; i++) {
         const ingredient = meal[`strIngredient${i}`];
@@ -52,8 +52,7 @@ const fetchRecipeDetail = async () => {
 };
 
 /**
- * AMÉLIORATION : Découpage des instructions en étapes numérotées
- * On utilise une propriété calculée pour transformer le gros bloc de texte en tableau
+ * Découpage intelligent des instructions en étapes numérotées
  */
 const formattedSteps = computed(() => {
   if (!recipe.value || !recipe.value.instructions) return [];
@@ -131,7 +130,7 @@ onMounted(fetchRecipeDetail);
 
 <style scoped>
 /**
- * REPRISE INTÉGRALE DE TES STYLES
+ * Style de la fiche détaillée
  */
 .recipe-container {
   max-width: 1100px;
@@ -255,7 +254,7 @@ onMounted(fetchRecipeDetail);
   color: #42b883;
 }
 
-/* Instructions Améliorées */
+/* Instructions */
 .instructions-section {
   background: white;
   padding: 30px;
