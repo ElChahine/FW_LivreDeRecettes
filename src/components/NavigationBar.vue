@@ -31,15 +31,15 @@ import { useRouter } from 'vue-router';
 const authStore = useAuthStore();
 const router = useRouter();
 
-// Fonction de déconnexion
+// Fonction de déconnexion et redirection vers l'écran de login
 const handleLogout = () => {
   authStore.logout();
-  router.push('/login'); // On renvoie l'utilisateur vers la page de connexion
+  router.push('/login'); 
 };
 </script>
 
 <style scoped>
-/* --- TON CSS D'ORIGINE INTACT --- */
+/* CSS d'origine intact */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -51,7 +51,7 @@ const handleLogout = () => {
 .nav-links {
   list-style: none;
   display: flex;
-  align-items: center; /* Permet d'aligner le bouton de déconnexion avec les liens */
+  align-items: center; 
   gap: 1.5rem;
 }
 .nav-links a {
@@ -60,7 +60,7 @@ const handleLogout = () => {
   font-weight: bold;
 }
 .nav-links a.router-link-active {
-  color: #d97706; /* Couleur active pour savoir sur quelle page on est */
+  color: #d97706; 
 }
 
 nav {
@@ -88,7 +88,7 @@ nav a.router-link-active {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* --- AJOUTS UNIQUEMENT POUR LA CONNEXION --- */
+/* Ajouts uniquement pour la connexion */
 .user-greeting span {
   color: white;
   font-weight: 500;

@@ -8,6 +8,7 @@ const authStore = useAuthStore();
 const randomRecipes = ref([]);
 const loading = ref(true);
 
+// Requête multiple pour obtenir 4 plats aléatoires dès la page d'accueil
 const fetchFeaturedRecipes = async () => {
   loading.value = true;
   try {
@@ -96,7 +97,7 @@ onMounted(fetchFeaturedRecipes);
   padding: 2rem;
 }
 
-/* Hero Section  */
+/* En-tête principal */
 .hero-section {
   text-align: center;
   padding: 4rem 1rem;
@@ -153,7 +154,7 @@ onMounted(fetchFeaturedRecipes);
 
 .btn-primary:hover { transform: translateY(-3px); }
 
-/* Suggestions Section  */
+/* Suggestions de plats */
 .featured-section {
   margin-bottom: 4rem;
 }
@@ -180,7 +181,7 @@ onMounted(fetchFeaturedRecipes);
   gap: 2rem;
 }
 
-/* About Section  */
+/* Zone descriptive */
 .about-section {
   display: grid;
   grid-template-columns: 1fr 1fr;

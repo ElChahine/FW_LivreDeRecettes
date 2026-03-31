@@ -4,7 +4,7 @@ import axios from 'axios';
 import RecipeCard from '../components/RecipeCard.vue';
 import { useFavoriteStore } from '../stores/favorites';
 
-// États existants
+// États existants pour la gestion de la liste
 const recipes = ref([]); // Liste alphabétique
 const searchResults = ref([]); // Résultats de recherche API
 const loading = ref(false);
@@ -15,7 +15,7 @@ const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 const currentLetterIndex = ref(0);
 const favoriteStore = useFavoriteStore();
 
-// NOUVEAUX ÉTATS POUR LES FILTRES
+// Nouveaux états pour les filtres
 const categories = ref([]);
 const selectedCategory = ref('Toutes');
 const categoryResults = ref([]);
@@ -43,7 +43,7 @@ const filterByCategory = async (category) => {
   }
 
   loading.value = true;
-  searchQuery.value = ''; // On vide la recherche si on filtre par catégorie
+    searchQuery.value = ''; // On vide la recherche si on filtre par catégorie
   try {
     const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
     categoryResults.value = response.data.meals.map(meal => ({
@@ -68,7 +68,7 @@ const performSearch = async () => {
     return;
   }
   
-  selectedCategory.value = 'Toutes'; // On réinitialise la catégorie si on cherche par texte
+    selectedCategory.value = 'Toutes'; // On réinitialise la catégorie si on cherche par texte
   loading.value = true;
   try {
     const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery.value}`);
@@ -90,7 +90,7 @@ const performSearch = async () => {
 };
 
 /**
- * Chargement par lot (Alphabet)
+ * Chargement par lot progressif
  */
 const fetchNextBatch = async () => {
   if (currentLetterIndex.value >= alphabet.length || loading.value || searchQuery.value || selectedCategory.value !== 'Toutes') return;
@@ -124,7 +124,7 @@ onMounted(() => {
 });
 
 /**
- * Détermine quelle liste afficher
+ * Détermine quelle liste afficher selon les actions de l'utilisateur
  */
 const displayRecipes = computed(() => {
   let baseList = [];
@@ -219,7 +219,7 @@ h1 { font-size: 2.5rem; color: #2d3436; margin-bottom: 1.5rem; }
   border: 2px solid #dfe6e9; border-radius: 50px; font-size: 1rem;
 }
 
-/* STYLE DES CATÉGORIES */
+/* Style des catégories */
 .categories-filter {
   display: flex; gap: 10px; overflow-x: auto; width: 100%; max-width: 800px;
   padding: 10px 0; scrollbar-width: none;
@@ -235,7 +235,7 @@ h1 { font-size: 2.5rem; color: #2d3436; margin-bottom: 1.5rem; }
 
 .recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
 
-/* SKELETONS */
+/* Animation de chargement */
 .skeleton-card { height: 300px; background: #f0f0f0; border-radius: 15px; animation: pulse 1.5s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 

@@ -4,25 +4,28 @@ import { useFavoriteStore } from '../stores/favorites';
 import { useAuthStore } from '../stores/auth'; 
 import { useLibraryStore } from '../stores/libraries'; 
 
+// Récupère l'objet recette passé par le composant parent (ex: RecipeListView)
 const props = defineProps(['recipe']);
 
 const favoriteStore = useFavoriteStore();
 const authStore = useAuthStore();
 const libStore = useLibraryStore();
 
-// Récupère les bibliothèques de l'utilisateur connecté 
+// Obtient la liste des collections de l'utilisateur en temps réel
 const myLibraries = computed(() => libStore.libraries[authStore.user?.name] || []);
 
+// Vérifie si la recette affichée est déjà rangée dans la bibliothèque demandée
 const isRecipeInLibrary = (libId) => {
   const lib = myLibraries.value.find(l => l.id === libId);
   return lib ? lib.recipes.some(r => r.id === props.recipe.id) : false;
 };
 
+// Gère la sélection d'une bibliothèque dans la liste déroulante
 const handleAdd = (event) => {
   const libId = parseInt(event.target.value);
   if (libId) {
     libStore.addRecipeToLibrary(libId, props.recipe);
-    event.target.value = ""; 
+    event.target.value = ""; // Remet le menu sur "Ajouter à une collection..."
     alert('Recette ajoutée à votre collection !');
   }
 };
@@ -64,6 +67,7 @@ const handleAdd = (event) => {
 </template>
 
 <style scoped>
+/* Les styles ont été conservés à l'identique */
 .recipe-card {
   background: white;
   border-radius: 15px;

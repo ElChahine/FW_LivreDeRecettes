@@ -3,12 +3,15 @@ import { ref, computed } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useLibraryStore } from '../stores/libraries';
 
+// Récupère les stores d'authentification et de gestion des bibliothèques
 const authStore = useAuthStore();
 const libStore = useLibraryStore();
 const newLibName = ref('');
 
+// Propriété calculée qui liste les bibliothèques du compte actif
 const myLibraries = computed(() => libStore.libraries[authStore.user?.name] || []);
 
+// Fonction de création d'une nouvelle bibliothèque
 const handleCreate = () => {
   if (newLibName.value.trim()) {
     libStore.createLibrary(newLibName.value);
@@ -51,6 +54,7 @@ const handleCreate = () => {
 
 <style scoped>
 
+/* Container principal du profil utilisateur */
 .profile-container {
   max-width: 1000px;
   margin: 0 auto;

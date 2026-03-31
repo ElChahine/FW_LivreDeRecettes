@@ -8,10 +8,10 @@ import LibraryDetailView from '../views/LibraryDetailView.vue';
 import { useAuthStore } from '../stores/auth';
 
 const routes = [
-  { path: '/', name: 'Home', component: HomeView }, // Public
-  { path: '/login', name: 'Login', component: LoginView }, // Public
+  // --- Routes publiques accessibles à tous ---
+  { path: '/', name: 'Home', component: HomeView }, 
+  { path: '/login', name: 'Login', component: LoginView }, 
   
-  // On ajoute une balise "meta" pour signaler que ces routes sont privées
   { 
     path: '/recettes', 
     name: 'Recipes', 
@@ -19,42 +19,42 @@ const routes = [
     meta: { requiresAuth: false } 
   },
   { 
+    // Route dynamique avec paramètre ":id"
     path: '/recettes/:id', 
     name: 'RecipeDetail', 
     component: RecipeDetailView,
     meta: { requiresAuth: false } 
   },
+
+  // --- Routes privées protégées ---
   { 
     path: '/profil', 
     name: 'Profile', 
     component: ProfileView, 
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true } // Cette balise sert de repère au Navigation Guard
   },
   { 
-  path: '/profil/bibliotheque/:id', 
-  name: 'LibraryDetail', 
-  component: LibraryDetailView, 
-  meta: { requiresAuth: true } 
-},
+    path: '/profil/bibliotheque/:id', 
+    name: 'LibraryDetail', 
+    component: LibraryDetailView, 
+    meta: { requiresAuth: true } 
+  },
 ];
-
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
-// Navigation Guard
+// Navigation Guard : Vérifie les accès avant chaque changement de page
 router.beforeEach((to, from, next) => {
-  // On appelle le store pour vérifier si quelqu'un est connecté
   const authStore = useAuthStore();
 
-  // Si la page où on veut aller (to) possède la balise requiresAuth
-  // et que personne n'est connecté (!authStore.user)
+  // Si la page est marquée "requiresAuth" et que personne n'est connecté
   if (to.meta.requiresAuth && !authStore.user) {
-    next('/login'); // On bloque et on redirige vers la connexion
+    next('/login'); // Redirection forcée vers la page de connexion
   } else {
-    next(); // Sinon, tout va bien, on le laisse passer
+    next(); // Autorise le passage
   }
 });
 
