@@ -1,19 +1,42 @@
-# Mon Carnet Gourmand - Projet Vue.js
+# 🍳 Mon Carnet Gourmand - Projet Vue.js
 
-## Objectif
-Création d'une application de livre de recettes interactive permettant de consulter une liste de plats et leurs détails.
+## 🎯 Objectif du projet
+L'objectif de cette application est de permettre aux passionnés de cuisine de découvrir de nouvelles recettes via l'API **TheMealDB**, de gérer leurs favoris et d'organiser leurs propres bibliothèques de recettes personnalisées. L'application offre une expérience fluide pour rechercher, consulter et sauvegarder des inspirations culinaires.
 
-## Fonctionnalités principales
-- Affichage d'une liste dynamique de recettes.
-- Consultation du détail d'une recette via un itinéraire (route) spécifique.
-- [À ajouter : Barre de recherche / Système de favoris]
+## ✨ Fonctionnalités principales
+* **Exploration dynamique** : Recherche de recettes par nom et filtrage par catégories (Bœuf, Poulet, Desserts, etc.).
+* **Fiches détaillées** : Affichage structuré des ingrédients et des étapes de préparation numérotées.
+* **Système d'Authentification** : Accès sécurisé aux fonctionnalités personnalisées.
+* **Gestion des Favoris** : Possibilité de "liker" des recettes pour les retrouver facilement.
+* **Bibliothèques Personnalisées (Collections)** : Création, modification et suppression de dossiers pour organiser ses recettes par thème (ex: "Mes desserts préférés").
+* **Accueil Dynamique** : Suggestions de recettes aléatoires à chaque visite.
 
-## Difficultés rencontrées et solutions
-1. **Erreur 404 au lancement** : Le serveur Vite ne trouvait pas de point d'entrée. *Solution : Ajout d'un fichier `index.html` à la racine.*
-2. **Erreur de syntaxe JS sur les fichiers .vue** : Vite ne gérait pas les composants Vue par défaut. *Solution : Création du fichier `vite.config.js` et installation du plugin `@vitejs/plugin-vue`.*
-3. **Erreurs d'importation du routeur** : Conflit de nommage entre le dossier `routeur` et l'import `router`. *Solution : Renommage du dossier pour uniformiser le code.*
+## 👥 Équipe et Organisation
+* **Bensafia Chahine** : INCOMPLET
+* **Loisel Noé** : INCOMPLET
+* **Organisation** : INCOMPLET
 
-## Installation et lancement
-1. Cloner le dépôt.
-2. Installer les dépendances : `npm install`
-3. Lancer le projet : `npm run dev`
+## 🛠 Difficultés rencontrées et Solutions
+1.  **Gestion des conflits Git** : Lors de la fusion des branches (merge), des conflits sur `package-lock.json` sont apparus. 
+    * *Solution* : Utilisation du `git stash` pour mettre de côté les changements locaux avant le merge.
+2.  **Formatage des instructions de l'API** : Les instructions de préparation arrivaient en un seul bloc de texte illisible.
+    * *Solution* : Mise en place d'une fonction calculée (computed) utilisant des Expressions Régulières (Regex) pour découper le texte en étapes numérotées.
+3.  **Erreurs d'importation Vite** : Problèmes de résolution de chemins lors de l'ajout de nouvelles vues.
+    * *Solution* : Vérification rigoureuse de la casse des noms de fichiers et des chemins relatifs dans `router/index.js`.
+
+## 🚀 Installation et Lancement
+
+### Prérequis
+* Node.js installé sur votre machine.
+
+### Étapes
+1.  **Extraire le fichier ZIP** dans votre dossier de travail.
+2.  **Installer les dépendances** :
+    ```bash
+    npm install
+    ```
+3.  **Lancer l'application** en mode développement :
+    ```bash
+    npm run dev
+    ```
+4.  Ouvrir votre navigateur à l'adresse indiquée (généralement `http://localhost:5173`).
