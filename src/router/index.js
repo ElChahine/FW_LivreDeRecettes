@@ -4,6 +4,7 @@ import RecipeListView from '../views/RecipeListView.vue';
 import RecipeDetailView from '../views/RecipeDetailView.vue';
 import LoginView from '../views/LoginView.vue';
 import ProfileView from '../views/ProfileView.vue';
+import LibraryDetailView from '../views/LibraryDetailView.vue';
 import { useAuthStore } from '../stores/auth';
 
 const routes = [
@@ -28,8 +29,15 @@ const routes = [
     name: 'Profile', 
     component: ProfileView, 
     meta: { requiresAuth: true }
-  }
+  },
+  { 
+  path: '/profil/bibliotheque/:id', 
+  name: 'LibraryDetail', 
+  component: LibraryDetailView, 
+  meta: { requiresAuth: true } 
+},
 ];
+
 
 const router = createRouter({
   history: createWebHistory(),

@@ -7,7 +7,6 @@ const authStore = useAuthStore();
 const libStore = useLibraryStore();
 const newLibName = ref('');
 
-// Récupère les bibliothèques de l'utilisateur connecté 
 const myLibraries = computed(() => libStore.libraries[authStore.user?.name] || []);
 
 const handleCreate = () => {
@@ -33,7 +32,9 @@ const handleCreate = () => {
     <div class="libraries-grid">
       <div v-for="lib in myLibraries" :key="lib.id" class="library-card">
         <div class="lib-header">
-          <h4>{{ lib.name }} ({{ lib.recipes.length }} recettes)</h4>
+          <router-link :to="{ name: 'LibraryDetail', params: { id: lib.id } }" class="lib-link">
+            <h4>{{ lib.name }} ({{ lib.recipes.length }} recettes)</h4>
+          </router-link>
           <button class="delete-btn" @click="libStore.deleteLibrary(lib.id)">Supprimer</button>
         </div>
         
@@ -49,15 +50,166 @@ const handleCreate = () => {
 </template>
 
 <style scoped>
-.profile-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
-.add-library { background: #f4f4f4; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; }
-.input-group { display: flex; gap: 10px; }
-input { flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #ddd; }
-button { background: #42b883; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
-.libraries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-.library-card { border: 1px solid #eee; padding: 1.5rem; border-radius: 12px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-.lib-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; margin-bottom: 1rem; }
-.delete-btn { background: #e74c3c; font-size: 0.8rem; }
-.recipe-list { list-style: none; padding: 0; }
-.recipe-list li { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.9rem; border-bottom: 1px dashed #eee; }
+
+.profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-header h1 span {
+  color: #42b883;
+}
+
+.add-library-section {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 3rem;
+  border: 1px solid #eee;
+}
+
+.add-library-section h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.input-group {
+  display: flex;
+  gap: 15px;
+}
+
+input {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #42b883;
+}
+
+.create-btn {
+  background: #42b883;
+  color: white;
+  border: none;
+  padding: 0 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.create-btn:hover {
+  background: #33a06f;
+  transform: translateY(-2px);
+}
+
+.libraries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.library-card {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 18px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.library-card:hover {
+  transform: translateY(-5px);
+}
+
+.lib-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #f8f9fa;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lib-link {
+  text-decoration: none;
+  color: #2c3e50;
+}
+
+.lib-link h4 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.lib-link h4 span {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  font-weight: normal;
+}
+
+.lib-link:hover h4 {
+  color: #42b883;
+}
+
+
+.delete-btn {
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+}
+
+
+.recipe-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recipe-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.recipe-item:last-child {
+  border-bottom: none;
+}
+
+.recipe-title {
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+.remove-recipe-btn {
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.remove-recipe-btn:hover {
+  color: #ef4444;
+}
 </style>

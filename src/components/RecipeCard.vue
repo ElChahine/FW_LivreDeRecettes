@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue';
 import { useFavoriteStore } from '../stores/favorites';
-import { useAuthStore } from '../stores/auth'; // Import pour vérifier la connexion 
-import { useLibraryStore } from '../stores/libraries'; // Import pour gérer l'ajout [cite: 2]
+import { useAuthStore } from '../stores/auth'; 
+import { useLibraryStore } from '../stores/libraries'; 
 
 const props = defineProps(['recipe']);
 
@@ -10,15 +10,19 @@ const favoriteStore = useFavoriteStore();
 const authStore = useAuthStore();
 const libStore = useLibraryStore();
 
-// Récupère dynamiquement les bibliothèques de l'utilisateur connecté [cite: 2, 3]
+// Récupère les bibliothèques de l'utilisateur connecté 
 const myLibraries = computed(() => libStore.libraries[authStore.user?.name] || []);
 
-// Gère l'ajout d'une recette dans une collection sélectionnée [cite: 2]
+const isRecipeInLibrary = (libId) => {
+  const lib = myLibraries.value.find(l => l.id === libId);
+  return lib ? lib.recipes.some(r => r.id === props.recipe.id) : false;
+};
+
 const handleAdd = (event) => {
   const libId = parseInt(event.target.value);
   if (libId) {
     libStore.addRecipeToLibrary(libId, props.recipe);
-    event.target.value = ""; // Réinitialise le menu
+    event.target.value = ""; 
     alert('Recette ajoutée à votre collection !');
   }
 };
@@ -35,8 +39,13 @@ const handleAdd = (event) => {
       <div v-if="authStore.user" class="library-section">
         <select @change="handleAdd" class="library-select">
           <option value="" disabled selected>📁 Ajouter à une collection...</option>
-          <option v-for="lib in myLibraries" :key="lib.id" :value="lib.id">
-            {{ lib.name }}
+          <option 
+            v-for="lib in myLibraries" 
+            :key="lib.id" 
+            :value="lib.id"
+            :disabled="isRecipeInLibrary(lib.id)"
+          >
+            {{ lib.name }} {{ isRecipeInLibrary(lib.id) ? '(Déjà ajoutée)' : '' }}
           </option>
         </select>
       </div>
@@ -55,7 +64,6 @@ const handleAdd = (event) => {
 </template>
 
 <style scoped>
-/* Reprise intégrale de votre style esthétique */
 .recipe-card {
   background: white;
   border-radius: 15px;
@@ -96,7 +104,6 @@ h3 {
   margin-bottom: 1rem;
 }
 
-/* Style discret pour le sélecteur de bibliothèque */
 .library-section {
   margin-bottom: 1.2rem;
 }
@@ -110,12 +117,11 @@ h3 {
   font-size: 0.85rem;
   color: #7f8c8d;
   cursor: pointer;
-  transition: border-color 0.3s;
 }
 
 .library-select:focus {
   outline: none;
-  border-color: #42b983; /* Rappel de la couleur verte de votre style */
+  border-color: #42b983;
 }
 
 .card-footer {
@@ -136,6 +142,5 @@ h3 {
   border: none;
   font-size: 1.4rem;
   cursor: pointer;
-  padding: 0;
 }
 </style>
