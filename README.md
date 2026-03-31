@@ -29,7 +29,7 @@ L'objectif de cette application est de permettre aux passionnés de cuisine de d
 
 **Organisation** : Utilisation d'un système de branches dédiées par fonctionnalités (`feat/auth`, `feat/libraries`, `feat/global-search`) pour travailler en parallèle sur GitHub.
 
-## 🛠 Difficultés rencontrées et Solutions
+## Difficultés rencontrées et Solutions
 1.  **Gestion des conflits Git** : Lors de la fusion des branches (merge), des conflits sur `package-lock.json` et `router/index.js` sont apparus. 
     * *Solution* : Utilisation du `git stash` pour mettre de côté les changements locaux avant le merge, et résolution manuelle des conflits en équipe.
     
