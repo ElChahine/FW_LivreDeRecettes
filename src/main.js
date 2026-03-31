@@ -5,7 +5,6 @@ import router from './router/index.js';
 
 const app = createApp(App);
 
-// Pinia pour gérer les stores
 const pinia = createPinia();
 
 app.use(pinia);

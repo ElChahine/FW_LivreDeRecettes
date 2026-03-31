@@ -10,21 +10,21 @@ const favoriteStore = useFavoriteStore();
 const authStore = useAuthStore();
 const libStore = useLibraryStore();
 
-// Obtient la liste des collections de l'utilisateur en temps réel
+// // Liste des bibliothèques de l'user
 const myLibraries = computed(() => libStore.libraries[authStore.user?.name] || []);
 
-// Vérifie si la recette affichée est déjà rangée dans la bibliothèque demandée
+// Vérifie si la recette affichée est déjà dans une bibliothèque
 const isRecipeInLibrary = (libId) => {
   const lib = myLibraries.value.find(l => l.id === libId);
   return lib ? lib.recipes.some(r => r.id === props.recipe.id) : false;
 };
 
-// Gère la sélection d'une bibliothèque dans la liste déroulante
+// Gère la sélection d'une bibliothèque
 const handleAdd = (event) => {
   const libId = parseInt(event.target.value);
   if (libId) {
     libStore.addRecipeToLibrary(libId, props.recipe);
-    event.target.value = ""; // Remet le menu sur "Ajouter à une collection..."
+    event.target.value = ""; // Remet le menu sur "Ajouter a une collection"
     alert('Recette ajoutée à votre collection !');
   }
 };

@@ -15,7 +15,7 @@ const handleLogin = () => {
   const success = authStore.login(username.value, password.value);
   
   if (success) {
-    router.push('/'); // Redirection vers l'accueil si la connexion réussit
+    router.push('/'); // Redirection vers l'accueil si la connexion marche
   } else {
     errorMessage.value = 'Identifiants incorrects. Essayez admin / 123';
   }

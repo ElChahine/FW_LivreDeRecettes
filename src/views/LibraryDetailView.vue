@@ -12,7 +12,7 @@ const route = useRoute();
 const libStore = useLibraryStore();
 const authStore = useAuthStore();
 
-// On sélectionne la bonne bibliothèque en comparant son id à celui présent dans l'URL
+// On sélectionne la bonne bibliothèque en comparant son id à celui de l'URL
 const library = computed(() => {
   const userLibs = libStore.libraries[authStore.user?.name] || [];
   return userLibs.find(l => l.id === parseInt(route.params.id));

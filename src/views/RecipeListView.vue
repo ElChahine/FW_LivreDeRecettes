@@ -208,38 +208,153 @@ const displayRecipes = computed(() => {
 </template>
 
 <style scoped>
-.main-container { max-width: 1200px; margin: 0 auto; padding: 2rem; font-family: 'Inter', sans-serif; }
-.page-header { text-align: center; margin-bottom: 3rem; }
-h1 { font-size: 2.5rem; color: #2d3436; margin-bottom: 1.5rem; }
+/* Harmonisation avec ProfileView : max-width 1000px et espacement aéré */
+.main-container { 
+  max-width: 1000px; 
+  margin: 0 auto; 
+  padding: 2rem; 
+  font-family: 'Inter', sans-serif; 
+}
 
-.search-section { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.page-header { 
+  text-align: center; 
+  margin-bottom: 3rem; 
+}
+
+h1 { 
+  font-size: 2.5rem; 
+  color: #2c3e50; 
+  margin-bottom: 1.5rem; 
+}
+
+/* Accent vert sur le titre comme dans le profil */
+h1::after {
+  content: " .";
+  color: #42b883;
+}
+
+.search-section { 
+  background: #f8f9fa; 
+  padding: 2rem; 
+  border-radius: 15px; 
+  border: 1px solid #eee;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
 
 .search-input {
-  width: 100%; max-width: 600px; padding: 0.8rem 1.2rem;
-  border: 2px solid #dfe6e9; border-radius: 50px; font-size: 1rem;
+  width: 100%; 
+  max-width: 600px; 
+  padding: 12px 18px;
+  border: 2px solid #e2e8f0; 
+  border-radius: 10px; 
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
-/* Style des catégories */
+.search-input:focus {
+  outline: none;
+  border-color: #42b883;
+}
+
+/* Filtres de catégories plus aérés */
 .categories-filter {
-  display: flex; gap: 10px; overflow-x: auto; width: 100%; max-width: 800px;
-  padding: 10px 0; scrollbar-width: none;
+  display: flex; 
+  gap: 12px; 
+  overflow-x: auto; 
+  width: 100%; 
+  max-width: 800px;
+  padding: 10px 0; 
+  scrollbar-width: none;
 }
+
 .categories-filter::-webkit-scrollbar { display: none; }
+
 .categories-filter button {
-  padding: 8px 18px; border-radius: 20px; border: 1px solid #eee;
-  background: white; cursor: pointer; white-space: nowrap; transition: 0.3s;
+  padding: 10px 20px; 
+  border-radius: 50px; 
+  border: 1px solid #eee;
+  background: white; 
+  color: #7f8c8d;
+  cursor: pointer; 
+  white-space: nowrap; 
+  transition: all 0.3s;
+  font-weight: 500;
 }
-.categories-filter button.active { background: #42b883; color: white; border-color: #42b883; }
 
-.fav-filter { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; cursor: pointer; }
+.categories-filter button:hover {
+  border-color: #42b883;
+  color: #42b883;
+}
 
-.recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+.categories-filter button.active { 
+  background: #42b883; 
+  color: white; 
+  border-color: #42b883; 
+  box-shadow: 0 4px 10px rgba(66, 184, 131, 0.2);
+}
 
-/* Animation de chargement */
-.skeleton-card { height: 300px; background: #f0f0f0; border-radius: 15px; animation: pulse 1.5s infinite; }
+.fav-filter { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.8rem; 
+  font-weight: 600; 
+  cursor: pointer; 
+  color: #2c3e50;
+}
+
+/* Grille de recettes avec un espacement plus important */
+.recipe-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+  gap: 2.5rem; 
+}
+
+/* Animation de chargement*/
+.skeleton-card { 
+  height: 350px; 
+  background: #f0f0f0; 
+  border-radius: 18px; 
+  animation: pulse 1.5s infinite; 
+}
+
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-.loading-state, .no-results { text-align: center; padding: 3rem; color: #636e72; }
-.footer-actions { margin-top: 4rem; text-align: center; }
-.load-btn { background-color: #2d3436; color: white; border: none; padding: 1rem 2.5rem; border-radius: 50px; cursor: pointer; font-weight: bold; }
+.loading-state, .no-results { 
+  text-align: center; 
+  padding: 4rem; 
+  color: #636e72; 
+  font-size: 1.1rem;
+}
+
+.footer-actions {
+  margin-top: 5rem; 
+  text-align: center; 
+}
+
+/* Bouton "Voir plus" harmonisé */
+.load-btn { 
+  background-color: #2c3e50; 
+  color: white; 
+  border: none; 
+  padding: 1.2rem 3rem; 
+  border-radius: 50px; 
+  cursor: pointer; 
+  font-weight: bold; 
+  transition: all 0.3s;
+}
+
+.load-btn:hover {
+  background-color: #42b883;
+  transform: translateY(-2px);
+}
+
+.load-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 </style>

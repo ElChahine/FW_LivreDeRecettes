@@ -87,7 +87,7 @@ nav a.router-link-active {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Ajouts uniquement pour la connexion */
+/* uniquement pour la connexion */
 .user-greeting span {
   color: white;
   font-weight: 500;

@@ -3,7 +3,6 @@ import { useAuthStore } from './auth';
 
 export const useLibraryStore = defineStore('libraries', {
   state: () => ({
-    // Structure stockée : { "nom_utilisateur": [ { id, name, recipes: [] } ] }
     libraries: JSON.parse(localStorage.getItem('user_libraries')) || {}
   }),
   actions: {
@@ -19,7 +18,7 @@ export const useLibraryStore = defineStore('libraries', {
       
       const username = authStore.user.name;
       
-      // Initialise l'espace utilisateur si inexistant
+      // Initialise l'espace utilisateur s'il n'existe pas
       if (!this.libraries[username]) this.libraries[username] = [];
       
       this.libraries[username].push({
@@ -39,7 +38,7 @@ export const useLibraryStore = defineStore('libraries', {
       this.saveToStorage();
     },
 
-    // Injecte l'objet complet d'une recette dans une collection choisie
+    // permet de mettre une recette dans une bibliothèque
     addRecipeToLibrary(libraryId, recipe) {
       const authStore = useAuthStore();
       const lib = this.libraries[authStore.user.name].find(l => l.id === libraryId);
