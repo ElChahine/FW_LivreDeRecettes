@@ -1,4 +1,4 @@
-# 🍳 Mon Carnet Gourmand - Projet Vue.js
+# 🍳 Livre de Recettes - Projet Vue.js
 
 ## 🎯 Objectif du projet
 L'objectif de cette application est de permettre aux passionnés de cuisine de découvrir de nouvelles recettes via l'API **TheMealDB**, de gérer leurs favoris et d'organiser leurs propres bibliothèques de recettes personnalisées. L'application offre une expérience fluide pour rechercher, consulter et sauvegarder des inspirations culinaires.
@@ -17,8 +17,8 @@ L'objectif de cette application est de permettre aux passionnés de cuisine de d
 
 * **Noé Loisel** : 
   * **Fondations** : Configuration du Routeur, création du menu de navigation et architecture globale des pages.
-  * **Composants & UI** : Création du composant `RecipeCard.vue`, refonte complète de la liste et la page de détails des recettes.
-  * **Authentification** : Mise en place du système de connexion avec Pinia et protection des routes via Navigation Guards (système critique).
+  * **Composants & UI** : Création du composant `RecipeCard.vue`, refonte complète de la liste et de la page de détails des recettes.
+  * **Authentification** : Mise en place du système de connexion avec Pinia et protection des routes via Navigation Guards.
   * **Persistance des données** : Finalisation de l'intégration Axios et gestion du `localStorage` pour la persistance des favoris par compte.
 
 * **Chahine Bensafia** :
@@ -27,20 +27,20 @@ L'objectif de cette application est de permettre aux passionnés de cuisine de d
   * **Features avancées** : Création du système de profil utilisateur, gestion des bibliothèques de recettes et placement en collection.
   * **Design & UX** : Création et intégration du design CSS global de l'application.
 
-**Organisation** : Système de branches dédiées par fonctionnalités (`feat/auth`, `feat/libraries`, `feat/global-search`) pour travailler en parallèle sur GitHub.
+**Organisation** : Utilisation d'un système de branches dédiées par fonctionnalités (`feat/auth`, `feat/libraries`, `feat/global-search`) pour travailler en parallèle sur GitHub.
 
 ## 🛠 Difficultés rencontrées et Solutions
 1.  **Gestion des conflits Git** : Lors de la fusion des branches (merge), des conflits sur `package-lock.json` et `router/index.js` sont apparus. 
     * *Solution* : Utilisation du `git stash` pour mettre de côté les changements locaux avant le merge, et résolution manuelle des conflits en équipe.
     
 2.  **Formatage des instructions de l'API** : Les instructions de préparation arrivaient en un seul bloc de texte illisible.
-    * *Solution* : Mise en place d'une fonction calculée (computed) utilisant des Expressions Régulières (Regex) pour découper le texte en étapes numérotées.
+    * *Solution* : Mise en place d'une fonction calculée (`computed`) utilisant des Expressions Régulières (Regex) pour découper le texte en étapes numérotées.
     
-3.  **Synchronisation des favoris entre sessions** : Les modifications dans un onglet n'étaient pas visibles dans les autres (Pinia stockait l'état en mémoire sans communication entre instances).
-    * *Solution* : Implémentation d'écouteurs `storage` pour détecter les changements du `localStorage` et mettre à jour les stores en temps réel.
+3.  **Synchronisation des favoris entre sessions** : Les modifications dans un onglet n'étaient pas immédiatement visibles dans les autres instances ouvertes.
+    * *Solution* : Implémentation d'écouteurs `storage` pour détecter les changements du `localStorage` et mettre à jour les stores Pinia en temps réel.
     
-4.  **Persistance des favoris liée au profil utilisateur** : Les favoris d'un utilisateur apparaissaient pour tous les utilisateurs après reconnexion.
-    * *Solution* : Structuration du `localStorage` avec clé compostée (`user_${userId}_favorites`) et nettoyage des stores lors de la déconnexion.
+4.  **Persistance des favoris liée au profil utilisateur** : Les favoris d'un utilisateur apparaissaient pour tous les comptes après reconnexion.
+    * *Solution* : Structuration du `localStorage` avec une clé composée (`user_${userId}_favorites`) et nettoyage complet des stores lors de la déconnexion.
 
 ## 🚀 Installation et Lancement
 
